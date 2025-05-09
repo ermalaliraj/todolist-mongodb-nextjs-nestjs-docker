@@ -5,12 +5,12 @@
 	docker-compose up -d
 
 # Connect
-	curl http://localhost:9200
-    curl http://elastic.ermalaliraj.com:9201
+	curl http://localhost:5601
+    curl http://kibana.ermalaliraj.com:5601
 
 # Health Checks
     -- send log to elastic search
-	curl -X POST http://localhost:9200/todolist/_doc -H 'Content-Type: application/json' -d '{
+	curl -X POST http://localhost:5600/todolist/_doc -H 'Content-Type: application/json' -d '{
       "title": "Test ELK Integration2",
       "description": "Fully working example2",
       "isCompleted": false,
@@ -18,4 +18,4 @@
     }'
 
     -- check the log in Kibana dashboard
-    curl http://localhost:9201   => 
+    curl http://localhost:5601   => 
