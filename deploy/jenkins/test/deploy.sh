@@ -32,8 +32,8 @@ if [ -f "/tmp/todolist/todolist.tar.gz" ]; then
     sudo tar xvzf todolist.tar.gz --strip-components 1
     sudo rm -f todolist.tar.gz
     chmod o+x docker-clean-all.sh
-    sh docker-clean-all.sh
-    docker compose up -d
+    sudo sh docker-clean-all.sh
+    sudo docker compose up -d
     echo "✅ todolist deployed successfully."
 else
     echo "File /tmp/todolist/todolist.tar.gz does not exist. Deploy didn't succeed. Old application version is still running!"
