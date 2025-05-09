@@ -15,7 +15,7 @@ services:
     networks:
       - todolist-net  
     volumes:
-      - es-data:/data/elasticsearch
+      - es-data:/usr/share/elasticsearch/data
       
   kibana:
     extends:

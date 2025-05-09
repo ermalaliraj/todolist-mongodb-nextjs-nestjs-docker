@@ -7,7 +7,7 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - es-data:/data/elasticsearch
+      - es-data:/usr/share/elasticsearch/data
 
 volumes:
   es-data:
