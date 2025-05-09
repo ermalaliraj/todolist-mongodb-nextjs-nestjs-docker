@@ -6,6 +6,7 @@
 
 # Connect
 	curl http://localhost:9200
+    curl http://elastic.ermalaliraj.com:9200
 
 # Health Checks
 	curl -X POST http://localhost:9200/todolist/_doc -H 'Content-Type: application/json' -d '{

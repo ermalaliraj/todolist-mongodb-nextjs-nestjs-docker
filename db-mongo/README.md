@@ -5,8 +5,10 @@
     docker-compose up -d --build
 
 # Connect to MongoDB
+    -- local 
 	mongo -u todolist -p todolist --authenticationDatabase admin --host localhost --port 27017
-    mongo -u todolist -p todolist --authenticationDatabase admin --host mongodb.ermalaliraj.com --port 27017
+    -- remote
+    mongosh -u todolist -p todolist --authenticationDatabase admin --host mongo.ermalaliraj.com --port 27017
 
 # Health Checks
 	use todolist

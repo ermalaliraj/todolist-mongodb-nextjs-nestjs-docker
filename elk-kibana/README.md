@@ -6,6 +6,7 @@
 
 # Connect
 	curl http://localhost:9200
+    curl http://elastic.ermalaliraj.com:9201
 
 # Health Checks
     -- send log to elastic search

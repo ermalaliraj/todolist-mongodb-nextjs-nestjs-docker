@@ -1,8 +1,7 @@
-version: '3'
 services:
   kibana:
     container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.17.9
+    image:  kibana:7.17.9
     ports:
       - "9201:9201"
     environment:
