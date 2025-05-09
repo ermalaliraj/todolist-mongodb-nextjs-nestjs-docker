@@ -3,7 +3,7 @@
 set -e
 
 pwd
-SRC_DIR=todolist-all/
+SRC_DIR=.
 STAGE_DIR=/tmp/todolist
 DEPLOY_DIR=/www/wwwroot/todolist
 ZIP_NAME=todolist.tar.gz
@@ -12,7 +12,7 @@ SCRIPT_INSTALL=install-test.sh
 # Stage files
 echo "Creating zip $ZIP_NAME with content of folder '$SRC_DIR'"
 cd ..
-tar cvzf $ZIP_NAME --exclude='.git' --exclude='todolist.tar.gz' $SRC_DIR
+tar cvzf $ZIP_NAME --exclude='.git' all/
 echo "$ZIP_NAME created. Ready to be sent to the remote server: $(grep 'testServer' /etc/hosts | awk '{print $1}')"
 ssh testServer mkdir -p $STAGE_DIR
 ssh testServer sudo rm -rf $STAGE_DIR/$ZIP_NAME
