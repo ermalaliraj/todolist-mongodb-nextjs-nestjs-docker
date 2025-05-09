@@ -11,7 +11,7 @@ SCRIPT_INSTALL=install-test.sh
 
 # Stage files
 echo "Creating zip $ZIP_NAME with content of folder '$SRC_DIR'"
-tar cvzf $ZIP_NAME --exclude='.git' $SRC_DIR
+tar cvzf $ZIP_NAME --exclude='.git' --exclude='todolist-frontend.tar.gz' $SRC_DIR
 echo "$ZIP_NAME created. Ready to be sent to the remote server: $(grep 'testServer' /etc/hosts | awk '{print $1}')"
 ssh testServer mkdir -p $STAGE_DIR
 ssh testServer sudo rm -rf $STAGE_DIR/$ZIP_NAME
