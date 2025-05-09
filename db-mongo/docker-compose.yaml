@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:8.0.9
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: todolist
+      MONGO_INITDB_ROOT_PASSWORD: todolist
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

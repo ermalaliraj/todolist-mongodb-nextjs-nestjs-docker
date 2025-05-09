@@ -8,9 +8,9 @@ Build a simple To-Do List application with full CRUD operations (Create, Read, U
 - Configure a basic Kibana dashboard to visualize and analyze log events.
 
 # Tech Stack
-- Backend: 
-  - Mandatory: NestJS, MongoDB, 
-  - Nice to Have: RabbitMQ, Redis, Apollo GraphQL
+- Backend:
+    - Mandatory: NestJS, MongoDB,
+    - Nice to Have: RabbitMQ, Redis, Apollo GraphQL
 - Frontend: React or Next.js
 - DevOps: Docker, Kubernetes, Helm, ELK Stack
 
