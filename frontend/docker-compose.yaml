@@ -1,7 +1,7 @@
 services:
   frontend:
-    container_name: todolist/frontend
-    image: todolist/frontend
+    container_name: todolist-frontend
+    image: todolist-frontend
     build:
       context: .
       dockerfile: Dockerfile
