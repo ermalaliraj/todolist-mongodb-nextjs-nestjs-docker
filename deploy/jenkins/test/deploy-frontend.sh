@@ -3,7 +3,7 @@
 set -e
 
 pwd
-SRC_DIR=
+SRC_DIR=.
 STAGE_DIR=/tmp/todolist
 DEPLOY_DIR=/www/wwwroot/todolist-frontend
 ZIP_NAME=todolist-frontend.tar.gz
