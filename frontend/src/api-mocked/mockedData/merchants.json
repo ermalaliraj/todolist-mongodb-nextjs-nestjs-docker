@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Google Ltd",
+    "address": "87 Avenue de Grove",
+    "registrationNumber": "1310241",
+    "phone": "4465678124",
+    "email": "team@google.com",
+    "productSites": [
+      {
+        "id": "6",
+        "mids": [
+          {
+            "id": "14",
+            "gateway": {
+              "id": 1,
+              "name": "GENESIS-DD",
+              "paymentMethod": "DD"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Amazon",
+    "address": "143 Clark Street, Washington, D.C.",
+    "phone": "1786575645",
+    "registrationNumber": "9766655",
+    "email": "team@amazon.net",
+    "productSites": [
+      {
+        "id": "19",
+        "mids": [
+          {
+            "id": "26",
+            "gateway": {
+              "id": "3",
+              "name": "ACI-DD",
+              "paymentMethod": "DD"
+            }
+          },
+          {
+            "id": "20",
+            "gateway": {
+              "id": 2,
+              "name": "ACI-CC",
+              "paymentMethod": "CC"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

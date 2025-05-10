@@ -41,10 +41,12 @@ if [ -f "/tmp/todolist/todolist-frontend.tar.gz" ]; then
     sudo chown -R jenkins:jenkins /www/wwwroot/todolist-frontend
     mv /tmp/todolist/todolist-frontend.tar.gz /www/wwwroot/todolist-frontend
     cd /www/wwwroot/todolist-frontend
+    echo "Exploding the tar file..."
     sudo tar xvzf todolist-frontend.tar.gz --strip-components 1
     sudo rm -f todolist-frontend.tar.gz
-    chmod o+x install-test.sh
-    bash install-test.sh
+    chmod o+x docker-deploy.sh
+    echo "STarting docker deploy..."
+    bash docker-deploy.sh
     echo "✅ todolist-frontend deployed successfully."
 else
     echo "File /tmp/todolist/todolist-frontend.tar.gz does not exist. Deploy didn't succeed. Old application version is still running!"
