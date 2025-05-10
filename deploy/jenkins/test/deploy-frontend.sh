@@ -46,8 +46,8 @@ if [ -f "/tmp/todolist/todolist-frontend.tar.gz" ]; then
     sudo tar xvzf todolist-frontend.tar.gz --strip-components 1
     sudo rm -f todolist-frontend.tar.gz
     chmod o+x docker-deploy.sh
-    echo "STarting docker deploy..."
-    bash docker-deploy.sh
+    echo "Starting docker deploy..."
+    sudo bash docker-deploy.sh
     echo "✅ todolist-frontend deployed successfully."
 else
     echo "File /tmp/todolist/todolist-frontend.tar.gz does not exist. Deploy didn't succeed. Old application version is still running!"
