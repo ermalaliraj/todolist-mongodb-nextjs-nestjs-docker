@@ -26,8 +26,8 @@ npm run build-test || {
 }
 
 echo "Restart PM2 "
-pm2 delete wr-admin:5086 || true  # Ignore errors if process doesn't exist
-pm2 start npm --name "wr-admin:5086" -- run start-test || {
+pm2 delete todolist-frontend:5040 || true  # Ignore errors if process doesn't exist
+pm2 start npm --name "todolist-frontend:5040" -- run start-test || {
   echo "❌ Error: pm2 start failed"
   exit 1
 }
