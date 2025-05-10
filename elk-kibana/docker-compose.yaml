@@ -6,6 +6,6 @@ services:
       - "5601:5601"
     environment:
       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-      SERVER_PUBLICBASEURL: "http://kibana.ermalaliraj.com"
-#    depends_on:
-#      - elasticsearch
+      SERVER_PUBLICBASEURL: "http://todolist.ermalaliraj.com:5601"
+    depends_on:
+      - elasticsearch

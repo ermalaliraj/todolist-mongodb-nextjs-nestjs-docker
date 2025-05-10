@@ -13,5 +13,8 @@
         Schedule: * * * * *
 
 ### Execute shell
-    sh deploy/jenkins/test/deploy-backend.sh
-    sh deploy/jenkins/test/deploy-frontend.sh
+    sh db-mongo/jenkins-deploy.sh
+    sh elk-elasticsearch/jenkins-deploy.sh
+    sh elk-kibana/jenkins-deploy.sh
+    sh frontend/jenkins-deploy.sh
+    sh backend/jenkins-deploy.sh

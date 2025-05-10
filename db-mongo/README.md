@@ -8,7 +8,7 @@
     -- local 
 	mongo -u todolist -p todolist --authenticationDatabase admin --host localhost --port 27017
     -- remote
-    mongosh -u todolist -p todolist --authenticationDatabase admin --host mongo.ermalaliraj.com --port 27017
+    mongosh -u todolist -p todolist --authenticationDatabase admin --host todolist.ermalaliraj.com --port 27017
 
 # Health Checks
 	use todolist

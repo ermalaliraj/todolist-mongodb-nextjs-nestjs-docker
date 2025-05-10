@@ -4,26 +4,22 @@
     cd elk-elasticsearch
 	docker-compose up -d
 
-# Connect
+# Connect (local vs remote)
 	curl http://localhost:9200
-    curl http://elastic.ermalaliraj.com:9200
+    curl http://todolist.ermalaliraj.com:9200
 
-# Health Checks Local
-	curl -X POST http://localhost:9200/todolist/_doc -H 'Content-Type: application/json' -d '{
+# Health Checks
+    -- 1. ELASTICSEARCH - send log
+	curl -X POST http://todolist.ermalaliraj.com:9200/todolist/_doc -H 'Content-Type: application/json' -d '{
       "title": "Test ELK Integration2",
       "description": "Fully working example2",
       "isCompleted": false,
       "createdAt": "2025-05-09T11:00:00Z"
     }'
 
-    curl http://localhost:9200   => 
+    -- 2. ELASTICSEARCH - check json config
+    curl http://todolist.ermalaliraj.com:9200/
 
-# Health Checks Server
-	curl -X POST http://elastic.ermalaliraj.com:9200/todolist/_doc -H 'Content-Type: application/json' -d '{
-      "title": "Test ELK Integration2",
-      "description": "Fully working example2",
-      "isCompleted": false,
-      "createdAt": "2025-05-09T11:00:00Z"
-    }'
-
-    curl http://elastic.ermalaliraj.com:9200/
+    -- 3. DATABASE - check mongo collection
+    mongosh -u todolist -p todolist --authenticationDatabase admin --host todolist.ermalaliraj.com --port 27017
+    db.todos.find().pretty()
