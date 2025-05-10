@@ -19,7 +19,3 @@
 
     -- 2. ELASTICSEARCH - check json config
     curl http://todolist.ermalaliraj.com:9200/
-
-    -- 3. DATABASE - check mongo collection
-    mongosh -u todolist -p todolist --authenticationDatabase admin --host todolist.ermalaliraj.com --port 27017
-    db.todos.find().pretty()

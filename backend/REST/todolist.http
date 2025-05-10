@@ -1,0 +1,23 @@
+GET http://localhost:5041/todolist
+
+###
+POST http://localhost:5041/todolist
+Content-Type: application/json
+
+{
+  "title": "todo 1",
+  "description": "Test",
+  "isCompleted": false
+}
+
+###
+PUT http://localhost:5041/todolist/681fc121db67d0800a5d8253
+Content-Type: application/json
+
+{
+  "title":"Food TodoList update"
+}
+
+###
+DELETE  http://localhost:5041/todolist/681fc121db67d0800a5d8253
+
