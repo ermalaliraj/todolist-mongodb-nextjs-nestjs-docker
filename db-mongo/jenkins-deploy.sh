@@ -45,9 +45,9 @@ if [ -f "/tmp/todolist/db-mongo.tar.gz" ]; then
     echo "Exploding the tar file in /www/wwwroot/todolist/db-mongo ..."
     sudo tar xvzf db-mongo.tar.gz --strip-components 1
     sudo rm -f db-mongo.tar.gz
-    chmod o+x docker-clean-deploy.sh
+    chmod o+x docker-deploy.sh
     echo "Starting docker deploy..."
-    sudo bash docker-clean-deploy.sh
+    sudo bash docker-deploy.sh
     echo "✅ db-mongo deployed successfully."
 else
     echo "File /tmp/todolist/db-mongo.tar.gz does not exist. Deploy didn't succeed. Old application version is still running!"
