@@ -2,8 +2,8 @@
 
 set -e
 
-IMAGE_NAME="mongo"
-IMAGE_VERSION="8.0.9"
+IMAGE_NAME="elasticsearch"
+IMAGE_VERSION="7.17.9"
 
 echo "Stopping mongo container..."
 docker stop ${IMAGE_NAME} || true

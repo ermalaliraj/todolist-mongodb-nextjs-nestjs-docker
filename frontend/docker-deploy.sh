@@ -2,13 +2,15 @@
 
 set -e
 
-echo "Stopping todolist-frontend container..."
-docker stop todolist-frontend || true
-echo "Removing todolist-frontend container..."
-docker rm todolist-frontend || true
-echo "Removing todolist-frontend image..."
-docker rmi todolist-frontend:latest || true
+IMAGE_NAME="todolist-frontend"
+IMAGE_VERSION="latest"
 
-echo "Building new image..."
-# docker compose build --no-cache
+echo "Stopping mongo container..."
+docker stop ${IMAGE_NAME} || true
+echo "Removing ${IMAGE_NAME} container..."
+docker rm ${IMAGE_NAME} || true
+echo "Removing ${IMAGE_NAME} image..."
+docker rmi ${IMAGE_NAME}:${IMAGE_VERSION} || true
+
+echo "Building new ${IMAGE_NAME}:${IMAGE_VERSION} image..."
 docker compose up -d --build
