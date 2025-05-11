@@ -4,7 +4,7 @@ import { API_URL } from '../utils/env'
 export const searchTodoListApi = async query => {
   query = query ? query : ''
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist${query}`
+  const url = `${API_URL}/todolist${query}`
   console.log(`calling GET ${url}`)
   try {
     const response = await axios.get(url, {
@@ -12,24 +12,7 @@ export const searchTodoListApi = async query => {
         Authorization: `Bearer ${token}`
       }
     })
-    console.log(" respoonse search", response.data)
-    return response.data
-  } catch (error) {
-    console.error('Failed calling backend url:', url, error)
-    throw error
-  }
-}
-
-export const getTodoListApi = async id => {
-  const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist/${id}`
-  console.log(`calling GET ${url}`)
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    console.log("searchTodoListApi response:", response.data)
     return response.data
   } catch (error) {
     console.error('Failed calling backend url:', url, error)
@@ -39,7 +22,7 @@ export const getTodoListApi = async id => {
 
 export const addTodoListApi = async data => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist`
+  const url = `${API_URL}/todolist`
   console.log(`calling POST ${url}, with data: ${JSON.stringify(data)}`)
   try {
     const response = await axios.post(url, data, {
@@ -57,7 +40,7 @@ export const addTodoListApi = async data => {
 
 export const updateTodoListApi = async (id, data) => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist/${id}`
+  const url = `${API_URL}/todolist/${id}`
   console.log(`calling PUT ${url}, with data: ${JSON.stringify(data)}`)
   try {
     const response = await axios.put(url, data, {
@@ -75,7 +58,7 @@ export const updateTodoListApi = async (id, data) => {
 
 export const deleteTodoListApi = async id => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist/${id}`
+  const url = `${API_URL}/todolist/${id}`
   console.log(`calling DELETE ${url}`)
   try {
     const response = await axios.delete(url, {
@@ -88,4 +71,4 @@ export const deleteTodoListApi = async id => {
     console.error('Failed calling backend url:', url, error)
     throw error
   }
-} 
+}
