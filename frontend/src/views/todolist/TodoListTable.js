@@ -50,19 +50,19 @@ const TodoListTable = () => {
       field: 'id',
       headerName: 'ID',
       renderCell: params => <span>{params.row?.id || '-'}</span>,
-      width: 5
+      width: 1
     },
     {
       field: 'title',
       headerName: 'Title',
       renderCell: params => <span>{params.row?.title || '-'}</span>,
-      width: 20
+      width: 19
     },
     {
       field: 'description',
       headerName: 'Description',
       renderCell: params => <span>{params.row?.description || '-'}</span>,
-      width: 30
+      width: 32
     },
     {
       field: 'isCompleted',
@@ -85,13 +85,13 @@ const TodoListTable = () => {
       field: 'createdAt',
       headerName: 'Created At',
       renderCell: params => <span>{new Date(params.row?.createdAt).toLocaleString() || '-'}</span>,
-      width: 15
+      width: 14
     },
     {
       field: 'updatedAt',
       headerName: 'Updated At',
       renderCell: params => <span>{new Date(params.row?.updatedAt).toLocaleString() || '-'}</span>,
-      width: 15
+      width: 14
     },
     {
       field: 'actions',
@@ -111,11 +111,11 @@ const TodoListTable = () => {
           </IconButton>
         </>
       ),
-      width: 12
+      width: 10
     }
   ]
 
-  const tableWidth = 1200
+  const tableWidth = 1350
   const totalWidth = columns.reduce((sum, col) => sum + col.width, 0)
   const adjustedColumns = columns.map(col => {
     const ratio = col.width / totalWidth
@@ -146,4 +146,4 @@ const TodoListTable = () => {
   )
 }
 
-export default TodoListTable 
+export default TodoListTable
