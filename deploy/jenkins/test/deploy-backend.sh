@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 pwd
 SRC_DIR=backend
 STAGE_DIR=/tmp/todolist
@@ -8,7 +10,8 @@ ZIP_NAME=todolist-backend.tar.gz
 SCRIPT_INSTALL=install-test.sh
 
 # Exit if change is outside the interested project
-BUILD_LOG_PATH="/var/lib/jenkins/jobs/twotone/jobs/todolist-2/jobs/$SRC_DIR/builds/$BUILD_NUMBER/log"
+JOB_NAME_SHORT=$(echo "$JOB_NAME" | cut -d'/' -f1) # extracts the main project name
+BUILD_LOG_PATH="/var/lib/jenkins/jobs/${JOB_NAME_SHORT}/jobs/$SRC_DIR/builds/$BUILD_NUMBER/log"
 echo "BUILD_LOG_PATH: $BUILD_LOG_PATH"
 BUILD_CAUSE=$(grep -i "Started by" "$BUILD_LOG_PATH" | head -n 1) # Searching this: "Started by user Ermal as Admin", to force build if Run fired by user and not by Push
 CHANGED_FILES=$(git diff --name-only HEAD^1)
@@ -38,10 +41,12 @@ if [ -f "/tmp/todolist/todolist-backend.tar.gz" ]; then
     sudo chown -R jenkins:jenkins /www/wwwroot/todolist-backend
     mv /tmp/todolist/todolist-backend.tar.gz /www/wwwroot/todolist-backend
     cd /www/wwwroot/todolist-backend
+    echo "Exploding the tar file..."
     sudo tar xvzf todolist-backend.tar.gz --strip-components 1
     sudo rm -f todolist-backend.tar.gz
-    chmod o+x install-test.sh
-    sh install-test.sh
+    chmod o+x docker-deploy.sh
+    echo "Starting docker deploy..."
+    sudo bash docker-deploy.sh
     echo "✅ todolist-backend deployed successfully."
 else
     echo "File /tmp/todolist/todolist-backend.tar.gz does not exist. Deploy didn't succeed. Old application version is still running!"

@@ -1,0 +1,23 @@
+GET http://todolist-api.ermalaliraj.com/todolist
+
+###
+POST http://localhost:5041/todolist
+Content-Type: application/json
+
+{
+  "title": "todo 1",
+  "description": "Test",
+  "isCompleted": false
+}
+
+###
+PUT http://localhost:5041/todolist/68205b11ab660ccf4bc9bb5d
+Content-Type: application/json
+
+{
+  "title":"todolist update"
+}
+
+###
+DELETE  http://localhost:5041/todolist/68205b11ab660ccf4bc9bb5d
+

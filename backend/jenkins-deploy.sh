@@ -7,7 +7,7 @@ SRC_DIR=backend
 STAGE_DIR=/tmp/todolist
 DEPLOY_DIR=/www/wwwroot/todolist/backend
 ZIP_NAME=backend.gz
-SCRIPT_INSTALL=install-test.sh
+SCRIPT_INSTALL=docker-deploy.sh
 
 # Exit if change is outside the interested project
 JOB_NAME_SHORT=$(echo "$JOB_NAME" | cut -d'/' -f1) # extracts the main project name

@@ -13,7 +13,7 @@ SCRIPT_INSTALL=install-test.sh
 JOB_NAME_SHORT=$(echo "$JOB_NAME" | cut -d'/' -f1) # extracts the main project name
 BUILD_LOG_PATH="/var/lib/jenkins/jobs/${JOB_NAME_SHORT}/jobs/$SRC_DIR/builds/$BUILD_NUMBER/log"
 echo "BUILD_LOG_PATH: $BUILD_LOG_PATH"
-BUILD_CAUSE=$(grep -i "Started by" "$BUILD_LOG_PATH" | head -n 1) # Searching this: "Started by user Ermal as frontend", to force build if Run fired by user and not by Push
+BUILD_CAUSE=$(grep -i "Started by" "$BUILD_LOG_PATH" | head -n 1) # Searching this: "Started by user Ermal as Admin", to force build if Run fired by user and not by Push
 CHANGED_FILES=$(git diff --name-only HEAD^1)
 CHANGED_DIRECTORIES=$(echo "$CHANGED_FILES" | awk -F'/' '{print $1}' | sort -u)
 CHANGED_PATHS=$(echo "$CHANGED_DIRECTORIES" | awk '{printf "/%s ", $0}')
@@ -34,7 +34,6 @@ echo "Zip sent to the remote server: $(grep 'testServer' /etc/hosts | awk '{prin
 
 # Deploy
 ssh testServer <<'ENDSSH'
-set -e
 if [ -f "/tmp/todolist/todolist-frontend.tar.gz" ]; then
     echo "Found file /tmp/todolist/todolist-frontend.tar.gz in the target server. Will start the deploy..."
     sudo rm -rf /www/wwwroot/todolist-frontend
