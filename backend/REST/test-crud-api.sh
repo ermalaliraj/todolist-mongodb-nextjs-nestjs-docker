@@ -11,7 +11,7 @@ echo -e "\n=== ADD NEW ==="
 POST_RESPONSE=$(curl -s -X POST http://localhost:5041/todolist \
   -H "Content-Type: application/json" \
   -d '{
-    "title":"Food TodoList Bash Add",
+    "title":"Food todolist Bash Add",
     "description":"Scripted add",
     "isCompleted":"Tirane"
   }')

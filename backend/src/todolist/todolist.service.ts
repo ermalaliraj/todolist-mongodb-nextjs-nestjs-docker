@@ -1,23 +1,23 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {TodoList, TodoListModel} from './todolist.schema';
+import {todolist, TodoListModel} from './todolist.schema';
 import {BaseService} from '../common/services/baseService';
 import {Model} from 'mongoose';
-import {TodoListDto} from './dto/todolist.dto';
+import {TodolistDto} from './dto/todolist.dto';
 import {FilterParams} from '../common/types';
-import {SearchTodoListDto} from './dto/search-todolist.dto';
-import {GetTodoListsResponse} from './dto/todoList.response';
+import {SearchTodolistDto} from './dto/search-todolist.dto';
+import {GetTodoListsResponse} from './dto/todolist.response';
 import logger from '../utils/logger';
 
 @Injectable()
-export class TodoListService extends BaseService<TodoList> {
+export class TodolistService extends BaseService<todolist> {
   constructor(
-    @InjectModel(TodoListModel.modelName) private readonly todoListModel: Model<TodoList>,
+    @InjectModel(TodoListModel.modelName) private readonly todoListModel: Model<todolist>,
   ) {
     super(todoListModel);
   }
 
-  async getAll(filter: SearchTodoListDto): Promise<GetTodoListsResponse> {
+  async getAll(filter: SearchTodolistDto): Promise<GetTodoListsResponse> {
     logger.debug(`Filter todoLists: ${JSON.stringify(filter)}`);
     const {_id, title, description, isCompleted, createdAt, updatedAt} = filter;
     let startFrom = filter.pageSize * (filter.page - 1);
@@ -60,11 +60,11 @@ export class TodoListService extends BaseService<TodoList> {
     return response;
   }
 
-  async getById(todoListId: string): Promise<TodoList> {
+  async getById(todoListId: string): Promise<todolist> {
     return await this.getOne({_id: todoListId});
   }
 
-  async createTodoList(body: TodoListDto): Promise<TodoList> {
+  async createTodoList(body: TodolistDto): Promise<todolist> {
     let newObject = {
       title: body.title,
       description: body.description,
@@ -75,7 +75,7 @@ export class TodoListService extends BaseService<TodoList> {
     return await this.create(newObject);
   }
 
-  async updateTodoList(body: TodoListDto, todoListId: string): Promise<TodoList> {
+  async updateTodoList(body: TodolistDto, todoListId: string): Promise<todolist> {
     let todolist = await this.getOne({_id: todoListId});
     if (body.title) {
       todolist.title = body.title;

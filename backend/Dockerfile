@@ -7,10 +7,10 @@ COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-#RUN npm run build
+RUN npm run build
 
 EXPOSE 5041
 
-#CMD ["npm", "start"]
-# Keeps the container running for manual access via: "docker exec -it frontend bash"
-CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "start"]
+# Keeps the container running for manual access via: "docker exec -it todolist-backend bash"
+#CMD ["tail", "-f", "/dev/null"]

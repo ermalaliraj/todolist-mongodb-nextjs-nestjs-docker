@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
-import { TodoListService } from './todolist.service'
-import { TodoListDto } from './dto/todolist.dto'
-import { SearchTodoListDto } from "./dto/search-todolist.dto";
-import { GetTodoListsResponse } from "./dto/todoList.response";
+import { TodolistService } from './todolist.service'
+import { TodolistDto } from './dto/todolist.dto'
+import { SearchTodolistDto } from "./dto/search-todolist.dto";
+import { GetTodoListsResponse } from "./dto/todolist.response";
 
 @Controller('/todolist')
-export class TodoListController {
+export class TodolistController {
 
-  constructor(private todoListService: TodoListService) {
+  constructor(private todoListService: TodolistService) {
   }
 
   @Get('')
-  async getAll(@Query() query: SearchTodoListDto): Promise<GetTodoListsResponse> {
+  async getAll(@Query() query: SearchTodolistDto): Promise<GetTodoListsResponse> {
     return await this.todoListService.getAll(query);
   }
 
@@ -21,12 +21,12 @@ export class TodoListController {
   }
 
   @Post('')
-  async create(@Body() body: TodoListDto) {
+  async create(@Body() body: TodolistDto) {
     return await this.todoListService.createTodoList(body)
   }
 
   @Put('/:todoListId([0-9a-fA-F]+)')
-  async update(@Body() body: TodoListDto, @Param('todoListId') todoListId: string) {
+  async update(@Body() body: TodolistDto, @Param('todoListId') todoListId: string) {
     return await this.todoListService.updateTodoList(body, todoListId)
   }
 

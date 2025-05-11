@@ -4,7 +4,7 @@ import { AppService } from './app.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { APP_PIPE } from '@nestjs/core'
-import { TodoListModule } from './todolist/todolist.module'
+import { TodolistModule } from './todolist/todolist.module'
 import logger from "./utils/logger";
 
 @Module({
@@ -27,7 +27,7 @@ import logger from "./utils/logger";
       },
       inject: [ConfigService],
     }),
-    TodoListModule
+    TodolistModule
   ],
   controllers: [AppController],
   providers: [
@@ -47,7 +47,7 @@ export class AppModule implements NestModule {
   //   consumer
   //     .apply(AuthMiddleware)
   //     .exclude(        
-  //       { path: '/todolist/onGoingAndFuture', method: RequestMethod.GET }
+  //       { path: '/todolist/...', method: RequestMethod.GET }
   //     )
   //     .forRoutes('*')
   }

@@ -23,6 +23,6 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', async () => {
     const response = await request(app.getHttpServer())
       .get('/')
-    expect('TodoList API is up and running! (Built in NestJS)')
+    expect('todolist API is up and running! (Built in NestJS)')
   })
 })

@@ -1,8 +1,8 @@
-import {TodoList} from "../todolist.schema";
+import {todolist} from "../todolist.schema";
 
 export type GetTodoListsResponse = {
   count: number
-  todoLists: TodoList[]
+  todoLists: todolist[]
   page: number
   pageSize: number
 }

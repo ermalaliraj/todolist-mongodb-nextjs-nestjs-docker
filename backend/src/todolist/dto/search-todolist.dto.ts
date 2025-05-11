@@ -1,7 +1,7 @@
 import {IsBoolean, IsDate, IsOptional, IsString} from 'class-validator'
 import {Type} from "class-transformer";
 
-export class SearchTodoListDto {
+export class SearchTodolistDto {
   @IsOptional() _id: string
   @IsOptional() @IsString() title: string
   @IsOptional() @IsString() description: string
