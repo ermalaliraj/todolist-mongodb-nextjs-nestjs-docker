@@ -1,0 +1,20 @@
+services:
+  frontend:
+    container_name: todolist-backend
+    image: todolist-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5041:5041"
+    environment:
+      - NODE_ENV=test
+    #depends_on:
+    #  - mongo
+    networks:
+      - todolist-net
+
+networks:
+  todolist-net:
+    name: todolist-net
+    driver: bridge

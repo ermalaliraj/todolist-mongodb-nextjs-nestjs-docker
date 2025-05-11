@@ -25,8 +25,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       status = exception.getStatus()
       errorMessage = exception.message
     }
-
-    logger.error(exception.stack)
+    logger.error("Unhandled Error:", exception.stack);
 
     response.status(status).json({
       statusCode: status,
@@ -37,14 +36,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
   private extractValidationErrors(exception: BadRequestException): string[] | null {
     const errors = exception.getResponse()
-    //console.log('Validation Errors:', errors);
-  
     if (typeof errors === 'string') {
       return [errors]
     } else if (errors && typeof errors === 'object' && 'message' in errors && Array.isArray(errors.message)) {
       return errors.message
     }
-
     return null
   }
 }

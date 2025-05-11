@@ -5,7 +5,7 @@ set -e
 IMAGE_NAME="todolist-frontend"
 IMAGE_VERSION="latest"
 
-echo "Stopping mongo container..."
+echo "Stopping ${IMAGE_NAME} container..."
 docker stop ${IMAGE_NAME} || true
 echo "Removing ${IMAGE_NAME} container..."
 docker rm ${IMAGE_NAME} || true
