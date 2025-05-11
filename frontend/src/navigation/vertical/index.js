@@ -8,6 +8,11 @@ const navigation = () => [
     title: 'Merchants',
     icon: 'mdi:handshake',
     path: '/merchants'
+  },
+  {
+    title: 'TodoList',
+    icon: 'mdi:work',
+    path: '/todolist'
   }
 ]
 
