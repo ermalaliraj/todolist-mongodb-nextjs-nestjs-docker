@@ -1,4 +1,4 @@
-import 'src/api-mocked'
+// import 'src/api-mocked'
 import Head from 'next/head'
 import { Router } from 'next/router'
 import { store } from 'src/store'

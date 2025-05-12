@@ -13,7 +13,8 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
       modules: true,
-      experimentalObjectRestSpread: true
+      experimentalObje,
+      ctRestSpread: true
     }
   },
   rules: {
@@ -46,7 +47,7 @@ module.exports = {
       {
         count: 1
       }
-    ],
+    ]
 
     // add new line after each var, const, let declaration
     // 'padding-line-between-statements': [

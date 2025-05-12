@@ -6,7 +6,7 @@ import data4 from '../mockedData/todolistPagedBy10Rows_page1.json'
 import data5 from '../mockedData/todolistPagedBy10Rows_page2.json'
 import { API_URL } from '../../utils/env'
 
-mockedServer.onGet(new RegExp(`${API_URL}/secured/todolist`)).reply(request => {
+mockedServer.onGet(new RegExp(`${API_URL}/todolist`)).reply(request => {
   const url = new URL(request.url, window.location.origin)
   const page = Number(url.searchParams.get('page') || 0)
   const size = Number(url.searchParams.get('size') || 10)
@@ -18,12 +18,12 @@ mockedServer.onGet(new RegExp(`${API_URL}/secured/todolist`)).reply(request => {
     if (page === 2) payload = data3
   } else if (size === 10) {
     if (page === 0) payload = data4
-    if (page === 1) payload = data5 
+    if (page === 1) payload = data5
   }
   return [200, payload]
 })
 
-mockedServer.onPost(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
+mockedServer.onPost(new RegExp(`${API_URL}/todolist`)).reply(config => {
   try {
     const newTodo = JSON.parse(config.data)
     const newId = `${Date.now()}`
@@ -36,7 +36,7 @@ mockedServer.onPost(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
   }
 })
 
-mockedServer.onPut(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
+mockedServer.onPut(new RegExp(`${API_URL}/todolist`)).reply(config => {
   try {
     const updatedData = JSON.parse(config.data)
     const urlParts = config.url.split('/')
@@ -55,7 +55,7 @@ mockedServer.onPut(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
   }
 })
 
-mockedServer.onDelete(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
+mockedServer.onDelete(new RegExp(`${API_URL}/todolist`)).reply(config => {
   const urlParts = config.url.split('/')
   const idToDelete = urlParts[urlParts.length - 1]
   const index = data.findIndex(item => item.id === idToDelete)

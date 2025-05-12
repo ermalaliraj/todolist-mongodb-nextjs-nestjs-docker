@@ -1,79 +1,93 @@
-// src/hooks/useServerTable.js
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRowAdded, setRowDeleted, setRowUpdated, setRowSearched } from 'src/store/rowsRequestedFromServer/rowsRequestedFromServerSearchSlice'
 
-export function useServerTable(
-  page,
-  pageSize,
-  asyncSearchTableData,
-  extraQuery = '',
-  resetDeps = [] // caller may omit or pass undefined/null
-) {
+export function useServerTable(page, pageSize, asyncSearchTableData, queryData, setQueryData, setPage, setPageSize) {
   const dispatch = useDispatch()
-  const state = useSelector(r => r.rowsRequestedFromServer.search)
-
+  const state = useSelector(rootState => rootState.rowsRequestedFromServer.search)
   const [loading, setLoading] = useState(false)
-  const [cache, setCache] = useState({})
-  const [rows, setRows] = useState([])
-  const [total, setTotal] = useState(0)
-
-  const reset = () => {
-    setCache({})
-    setRows([])
-    setTotal(0)
-  }
+  const [loadedChunks, setLoadedChunks] = useState(new Set())
+  const [localData, setLocalData] = useState([])
+  const [totalRowCount, setTotalRowCount] = useState(0)
+  const [allowMoreServerCalls, setAllowMoreServerCalls] = useState(true)
 
   useEffect(() => {
     if (state.rowAdded) {
       dispatch(setRowAdded(false))
-      reset()
+      setPage(0)
+      setLocalData([])
+      setLoadedChunks(new Set())
+      setAllowMoreServerCalls(true)
     }
-  }, [state.rowAdded])
-  useEffect(() => {
     if (state.rowDeleted) {
       dispatch(setRowDeleted(false))
-      reset()
+      setLocalData([])
+      setLoadedChunks(new Set())
+      setAllowMoreServerCalls(true)
     }
-  }, [state.rowDeleted])
-  useEffect(() => {
     if (state.rowUpdated) {
       dispatch(setRowUpdated(false))
-      reset()
+      setLocalData([])
+      setLoadedChunks(new Set())
+      setAllowMoreServerCalls(true)
     }
-  }, [state.rowUpdated])
+  }, [state.rowAdded, state.rowDeleted, state.rowUpdated])
+
   useEffect(() => {
     if (state.rowSearched) {
       dispatch(setRowSearched(false))
-      reset()
+      setPage(0)
+      setLocalData([])
+      setLoadedChunks(new Set())
+      setAllowMoreServerCalls(true)
     }
   }, [state.rowSearched])
 
-  const cacheKey = `${page}-${pageSize}-${extraQuery}`
+  useEffect(() => {
+    if (!allowMoreServerCalls) return
 
-  useEffect(
-    () => {
-      if (cache[cacheKey]) {
-        setRows(cache[cacheKey].rows)
-        setTotal(cache[cacheKey].total)
-        return
+    setLoading(true)
+    const endRow = Math.min((page + 1) * pageSize - 1, totalRowCount ? totalRowCount - 1 : Infinity)
+    const endChunk = Math.floor(endRow / pageSize)
+    const chunksToFetch = []
+    for (let chunk = 0; chunk <= endChunk; chunk++) {
+      if (!loadedChunks.has(chunk)) {
+        chunksToFetch.push(chunk)
       }
+    }
 
-      setLoading(true)
-      const query = `?page=${page}&size=${pageSize}${extraQuery ? `&${extraQuery}` : ''}`
+    const promises = chunksToFetch.map(chunk => {
+      const query = `?page=${chunk}&size=${pageSize}${queryData ? `&${queryData}` : ''}`
+      dispatch(setQueryData(query))
+      return dispatch(asyncSearchTableData(query)).then(response => {
+        const newData = response.payload.rows
+        const total = response.payload.totalRows
+        setTotalRowCount(total)
 
-      dispatch(asyncSearchTableData(query))
-        .then(res => {
-          const { rows: fetched, totalRows } = res.payload
-          setCache(prev => ({ ...prev, [cacheKey]: { rows: fetched, total: totalRows } }))
-          setRows(fetched)
-          setTotal(totalRows)
+        if (newData.length === 0) {
+          setAllowMoreServerCalls(false)
+          return
+        }
+
+        setLocalData(prev => {
+          const start = chunk * pageSize
+          const merged = [...prev]
+          newData.forEach((row, i) => {
+            merged[start + i] = row
+          })
+          return merged.filter(Boolean)
         })
-        .finally(() => setLoading(false))
-    },
-    // ⬇︎ safe spread – fallback to []
-    [cacheKey, ...(Array.isArray(resetDeps) ? resetDeps : [])]
-  )
 
-  return { loading, rows, total }
+        setLoadedChunks(prev => new Set(prev).add(chunk))
+
+        if (total <= (page + 1) * pageSize) {
+          setAllowMoreServerCalls(false)
+        }
+      })
+    })
+
+    Promise.all(promises).finally(() => setLoading(false))
+  }, [page, pageSize, loadedChunks, allowMoreServerCalls, setQueryData])
+
+  return { loading, localData, totalRowCount }
 }

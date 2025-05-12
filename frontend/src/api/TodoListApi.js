@@ -4,7 +4,7 @@ import { API_URL } from '../utils/env'
 export const searchTodoListApi = async query => {
   query = query ? query : ''
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/todolist${query}`
+  const url = `${API_URL}/todolist${query}`
   console.log(`calling GET ${url}`)
   try {
     const response = await axios.get(url, {

@@ -2,7 +2,7 @@ import mockedServer from 'src/api-mocked/mockedServer'
 import data from '../mockedData/merchants.json'
 import { API_URL } from '../../utils/env'
 
-mockedServer.onGet(new RegExp(`${API_URL}/secured/merchants`)).reply(request => {
+mockedServer.onGet(new RegExp(`${API_URL}/merchants`)).reply(request => {
   const url = new URL(request.url, window.location.origin)
   const params = Object.fromEntries(url.searchParams.entries())
   const { id = '', name = '', address = '', phone = '', email = '' } = params
@@ -26,7 +26,7 @@ mockedServer.onGet(new RegExp(`${API_URL}/secured/merchants`)).reply(request => 
   return [200, { data: slicedData, total: totalCount }]
 })
 
-mockedServer.onPost(new RegExp(`${API_URL}/secured/merchants`)).reply(config => {
+mockedServer.onPost(new RegExp(`${API_URL}/merchants`)).reply(config => {
   try {
     const newMerchant = JSON.parse(config.data)
     const newId = `${Date.now()}`
@@ -38,7 +38,7 @@ mockedServer.onPost(new RegExp(`${API_URL}/secured/merchants`)).reply(config => 
   }
 })
 
-mockedServer.onPut(new RegExp(`${API_URL}/secured/merchants`)).reply(config => {
+mockedServer.onPut(new RegExp(`${API_URL}/merchants`)).reply(config => {
   try {
     const updatedData = JSON.parse(config.data)
     const urlParts = config.url.split('/')
@@ -56,7 +56,7 @@ mockedServer.onPut(new RegExp(`${API_URL}/secured/merchants`)).reply(config => {
   }
 })
 
-mockedServer.onDelete(new RegExp(`${API_URL}/secured/merchants`)).reply(config => {
+mockedServer.onDelete(new RegExp(`${API_URL}/merchants`)).reply(config => {
   const urlParts = config.url.split('/')
   const idToDelete = urlParts[urlParts.length - 1]
   const index = data.findIndex(item => item.id === idToDelete)

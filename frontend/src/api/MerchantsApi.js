@@ -4,7 +4,7 @@ import { API_URL } from '../utils/env'
 export const searchMerchantsApi = async query => {
   query = query ? query : ''
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/merchants${query}`
+  const url = `${API_URL}/merchants${query}`
   console.log(`calling GET ${url}`)
   try {
     const response = await axios.get(url, {
@@ -21,7 +21,7 @@ export const searchMerchantsApi = async query => {
 
 export const getMerchantApi = async id => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/merchants/${id}`
+  const url = `${API_URL}/merchants/${id}`
   console.log(`calling GET ${url}`)
   try {
     const response = await axios.get(url, {
@@ -38,7 +38,7 @@ export const getMerchantApi = async id => {
 
 export const addMerchantApi = async data => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/merchants`
+  const url = `${API_URL}/merchants`
   console.log(`calling POST ${url}, with data: ${JSON.stringify(data)}`)
   try {
     const response = await axios.post(url, data, {
@@ -56,7 +56,7 @@ export const addMerchantApi = async data => {
 
 export const updateMerchantApi = async (id, data) => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/merchants/${id}`
+  const url = `${API_URL}/merchants/${id}`
   console.log(`calling PUT ${url}, with data: ${JSON.stringify(data)}`)
   console.log('update-url=', url)
   try {
@@ -76,7 +76,7 @@ export const updateMerchantApi = async (id, data) => {
 
 export const deleteMerchantApi = async id => {
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/secured/merchants/${id}`
+  const url = `${API_URL}/merchants/${id}`
   console.log(`calling DELETE ${url}`)
   console.info('Calling url:', url)
   try {
