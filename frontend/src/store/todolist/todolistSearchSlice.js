@@ -75,7 +75,7 @@ const todolistSearchSlice = createSlice({
       })
       .addCase(asyncSearchTodoList.fulfilled, (state, action) => {
         state.searchStatus = SUCCEEDED
-        state.rows = action.payload.data
+        state.rows = action.payload.todoLists
         state.total = action.payload.total
       })
       .addCase(asyncSearchTodoList.rejected, (state, action) => {
@@ -85,16 +85,6 @@ const todolistSearchSlice = createSlice({
   }
 })
 
-export const {
-  resetSearch,
-  setId,
-  setTitle,
-  setDescription,
-  setIsCompleted,
-  setFromDate,
-  setToDate,
-  toggleSearch,
-  setQueryData
-} = todolistSearchSlice.actions
+export const { resetSearch, setId, setTitle, setDescription, setIsCompleted, setFromDate, setToDate, toggleSearch, setQueryData } = todolistSearchSlice.actions
 
-export default todolistSearchSlice.reducer 
+export default todolistSearchSlice.reducer

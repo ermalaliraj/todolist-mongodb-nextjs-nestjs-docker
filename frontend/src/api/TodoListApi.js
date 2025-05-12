@@ -4,7 +4,7 @@ import { API_URL } from '../utils/env'
 export const searchTodoListApi = async query => {
   query = query ? query : ''
   const token = sessionStorage.getItem('token')
-  const url = `${API_URL}/todolist${query}`
+  const url = `${API_URL}/secured/todolist${query}`
   console.log(`calling GET ${url}`)
   try {
     const response = await axios.get(url, {
@@ -12,7 +12,7 @@ export const searchTodoListApi = async query => {
         Authorization: `Bearer ${token}`
       }
     })
-    console.log("searchTodoListApi response:", response.data)
+    console.log('searchTodoListApi response:', response.data)
     return response.data
   } catch (error) {
     console.error('Failed calling backend url:', url, error)

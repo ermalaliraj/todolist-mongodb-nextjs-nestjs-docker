@@ -19,3 +19,4 @@
 
     -- 2. KIBANA - check the log in dashboard
     curl http://todolist.ermalaliraj.com:5601
+    http://todolist.ermalaliraj.com:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15y,to:now))&_a=(columns:!(),filters:!(),index:'732f8b20-2e37-11f0-975a-f9778a73efa7',interval:auto,query:(language:kuery,query:''),sort:!(!(createdAt,desc)))

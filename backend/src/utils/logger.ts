@@ -1,7 +1,28 @@
-import appRoot from 'app-root-path'
 import * as winston from 'winston'
+import { ElasticsearchTransport } from 'winston-elasticsearch';
+import { Client } from '@elastic/elasticsearch';
 
-const loggerConfig = {
+const elasticSearchClient = new Client({
+  node: 'http://todolist.ermalaliraj.com:9200',
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+const elasticSearchConf = {
+  level: 'silly',
+  client: elasticSearchClient as any,
+  index: 'app-todolist', 
+  bufferLimit: 100,
+  flushInterval: 2000,
+  // transformer: (logData: any) => {
+  //   console.log('Log sent to ELK:', logData);
+  //   return logData;
+  // }
+};
+const elasticSearchTransport = new ElasticsearchTransport(elasticSearchConf);
+
+const consoleConfig = {
   winston: {
     console: {
       format: winston.format.combine(
@@ -11,30 +32,18 @@ const loggerConfig = {
       handleExceptions: true,
       level: 'debug',
     },
-    file: {
-      filename: `${appRoot}/logs/app.log`,
-      handleExceptions: true,
-      maxsize: 5242880, 
-      maxFiles: 100,
-    },
-    errorFile: {
-      filename: `${appRoot}/logs/error.log`,
-      handleExceptions: true,
-      maxsize: 5242880, 
-      maxFiles: 100,
-    },
   },
 }
 
-const customFormat = winston.format.printf(({ level, message }) => {
-  return `${level}: ${message}`
-});
-
 const logger = winston.createLogger({
-  format: customFormat, // Use the custom format
+    format: winston.format.combine(
+    winston.format.errors({ stack: true }),
+    winston.format.timestamp(),         
+    winston.format.json()              
+  ),
   transports: [
-    new winston.transports.Console(loggerConfig.winston.console),
-    new winston.transports.File(loggerConfig.winston.file),
+    new winston.transports.Console(consoleConfig.winston.console),
+    elasticSearchTransport
   ],
 })
 

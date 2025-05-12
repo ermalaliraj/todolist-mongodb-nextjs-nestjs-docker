@@ -1,31 +1,26 @@
 import mockedServer from 'src/api-mocked/mockedServer'
-import data from '../mockedData/todolist.json'
+import data1 from '../mockedData/todolistPagedBy5Rows_page1.json'
+import data2 from '../mockedData/todolistPagedBy5Rows_page2.json'
+import data3 from '../mockedData/todolistPagedBy5Rows_page3.json'
+import data4 from '../mockedData/todolistPagedBy10Rows_page1.json'
+import data5 from '../mockedData/todolistPagedBy10Rows_page2.json'
 import { API_URL } from '../../utils/env'
 
 mockedServer.onGet(new RegExp(`${API_URL}/secured/todolist`)).reply(request => {
-  console.log('Mocked API: Intercepted GET request for todolist')
   const url = new URL(request.url, window.location.origin)
-  const params = Object.fromEntries(url.searchParams.entries())
-  const {id = '', title = '', description = '', isCompleted = '', fromDate = '', toDate = ''} = params
-  const filtered = data.filter(item => {
-    const matchesId = id ? String(item.id).includes(id) : true
-    const matchesTitle = title ? item.title.toLowerCase().includes(title.toLowerCase()) : true
-    const matchesDescription = description ? item.description.toLowerCase().includes(description.toLowerCase()) : true
-    const matchesStatus = isCompleted !== '' ? String(item.isCompleted) === isCompleted : true
-    const matchesFromDate = fromDate ? new Date(item.createdAt) >= new Date(fromDate) : true
-    const matchesToDate = toDate ? new Date(item.updatedAt) <= new Date(toDate) : true
-    return matchesId && matchesTitle && matchesDescription && matchesStatus && matchesFromDate && matchesToDate
-  })
-  const page = parseInt(params.page) || 0
-  const size = parseInt(params.size) || data.length
-  const totalCount = filtered.length
-  const reversedData = filtered.slice().reverse()
-  const startIndex = page * size
-  const endIndex = startIndex + size
-  const slicedData = reversedData.slice(startIndex, endIndex)
+  const page = Number(url.searchParams.get('page') || 0)
+  const size = Number(url.searchParams.get('size') || 10)
 
-  console.log('Mocked API: Returning data:', slicedData)
-  return [200, {data: slicedData, total: totalCount}]
+  let payload = {}
+  if (size === 5) {
+    if (page === 0) payload = data1
+    if (page === 1) payload = data2
+    if (page === 2) payload = data3
+  } else if (size === 10) {
+    if (page === 0) payload = data4
+    if (page === 1) payload = data5 
+  }
+  return [200, payload]
 })
 
 mockedServer.onPost(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
@@ -33,11 +28,11 @@ mockedServer.onPost(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
     const newTodo = JSON.parse(config.data)
     const newId = `${Date.now()}`
     const now = new Date().toISOString()
-    const recordToStore = {id: newId, ...newTodo, createdAt: now, updatedAt: now}
+    const recordToStore = { id: newId, ...newTodo, createdAt: now, updatedAt: now }
     data.push(recordToStore)
-    return [200, {success: true, todolist: recordToStore}]
+    return [200, { success: true, todolist: recordToStore }]
   } catch {
-    return [400, {success: false, error: 'Invalid request data'}]
+    return [400, { success: false, error: 'Invalid request data' }]
   }
 })
 
@@ -49,14 +44,14 @@ mockedServer.onPut(new RegExp(`${API_URL}/secured/todolist`)).reply(config => {
     const foundIndex = data.findIndex(item => item.id === idToUpdate)
     if (foundIndex !== -1) {
       const now = new Date().toISOString()
-      data[foundIndex] = {...data[foundIndex], ...updatedData, updatedAt: now}
+      data[foundIndex] = { ...data[foundIndex], ...updatedData, updatedAt: now }
       return [200, data[foundIndex]]
     } else {
       console.log(`Todo with ID ${idToUpdate} not found`)
-      return [404, {success: false, error: `Todo with ID ${idToUpdate} not found`}]
+      return [404, { success: false, error: `Todo with ID ${idToUpdate} not found` }]
     }
   } catch {
-    return [400, {success: false, error: 'Invalid request data'}]
+    return [400, { success: false, error: 'Invalid request data' }]
   }
 })
 
@@ -66,8 +61,8 @@ mockedServer.onDelete(new RegExp(`${API_URL}/secured/todolist`)).reply(config =>
   const index = data.findIndex(item => item.id === idToDelete)
   if (index !== -1) {
     data.splice(index, 1)
-    return [200, {success: true}]
+    return [200, { success: true }]
   } else {
-    return [404, {success: false, error: 'Item not found'}]
+    return [404, { success: false, error: 'Item not found' }]
   }
 })

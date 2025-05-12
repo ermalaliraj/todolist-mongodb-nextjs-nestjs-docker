@@ -20,15 +20,7 @@ const TodoListTable = () => {
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
   const state = useSelector(rootState => rootState.todolist.search)
-  const { loading, localData, totalRowCount } = useServerTable(
-    page,
-    pageSize,
-    asyncSearchTodoList,
-    state.queryData,
-    setQueryData,
-    setPage,
-    setPageSize
-  )
+  const { loading, localData, totalRowCount } = useServerTable(page, pageSize, asyncSearchTodoList, state.queryData, setQueryData, setPage, setPageSize)
 
   const onClickUpdate = todo => {
     dispatch(openDialog({ editMode: true, todolist: todo }))
@@ -49,7 +41,7 @@ const TodoListTable = () => {
     {
       field: 'id',
       headerName: 'ID',
-      renderCell: params => <span>{params.row?.id || '-'}</span>,
+      renderCell: params => <span>{params.row?._id || '-'}</span>,
       width: 1
     },
     {
@@ -131,17 +123,7 @@ const TodoListTable = () => {
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
-      <CustomDataGrid
-        rows={localData}
-        rowCount={totalRowCount}
-        columns={adjustedColumns}
-        loading={loading}
-        page={page}
-        pageSize={pageSize}
-        onPageChange={handlePageChange}
-        onPageSizeChange={handlePageSizeChange}
-        getRowId={row => row.id}
-      />
+      <CustomDataGrid rows={localData} rowCount={totalRowCount} columns={adjustedColumns} loading={loading} page={page} pageSize={pageSize} onPageChange={handlePageChange} onPageSizeChange={handlePageSizeChange} getRowId={row => row._id} />
     </Box>
   )
 }

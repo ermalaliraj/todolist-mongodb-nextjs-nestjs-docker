@@ -18,7 +18,7 @@ export class TodolistService extends BaseService<todolist> {
   }
 
   async getAll(filter: SearchTodolistDto): Promise<GetTodoListsResponse> {
-    logger.debug(`Filter todoLists: ${JSON.stringify(filter)}`);
+    logger.info(`Get All todoLists with filters: ${JSON.stringify(filter)}`);
     const {_id, title, description, isCompleted, createdAt, updatedAt} = filter;
     let startFrom = filter.pageSize * (filter.page - 1);
     let params: FilterParams = {};
@@ -52,15 +52,17 @@ export class TodolistService extends BaseService<todolist> {
       false,
     );
     let response: GetTodoListsResponse = {
-      count: todoLists.length,
-      todoLists: todoLists,
       page: filter.page,
       pageSize: filter.pageSize,
+      totalRows: todoLists.length,
+      rows: todoLists,
     };
+    logger.info(`Get All todoLists-returning : ${JSON.stringify(response)}`);
     return response;
   }
 
   async getById(todoListId: string): Promise<todolist> {
+    logger.info(`Get todo itemById :${todoListId}`);
     return await this.getOne({_id: todoListId});
   }
 
@@ -72,6 +74,7 @@ export class TodolistService extends BaseService<todolist> {
       createdAt: body.createdAt,
       updatedAt: body.updatedAt,
     };
+    logger.info(`Create new todo item: ${JSON.stringify(newObject)}`);
     return await this.create(newObject);
   }
 
@@ -92,10 +95,12 @@ export class TodolistService extends BaseService<todolist> {
     if (body.updatedAt) {
       todolist.updatedAt = body.updatedAt;
     }
+    logger.info(`Updating todo item ${todoListId} to: ${JSON.stringify(body)}`);
     return await todolist.save();
   }
 
   async deleteTodoList(todoListId: string): Promise<void> {
+    logger.info(`Deleting todo item ${todoListId}`);
     let filter = {_id: todoListId};
     return await this.delete(filter);
   }

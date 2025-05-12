@@ -10,7 +10,7 @@
 
 # Health Checks
     -- 1. ELASTICSEARCH - send log
-	curl -X POST http://todolist.ermalaliraj.com:9200/todolist/_doc -H 'Content-Type: application/json' -d '{
+	curl -X POST http://todolist.ermalaliraj.com:9200/test-todolist/_doc -H 'Content-Type: application/json' -d '{
       "title": "Test ELK Integration2",
       "description": "Fully working example2",
       "isCompleted": false,
