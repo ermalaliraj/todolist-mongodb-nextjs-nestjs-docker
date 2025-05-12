@@ -9,3 +9,10 @@ services:
       SERVER_PUBLICBASEURL: "http://todolist.ermalaliraj.com:5601"
 #    depends_on:
 #      - elasticsearch
+    networks:
+      - todolist-net
+
+networks:
+  todolist-net:
+    name: todolist-net
+    driver: bridge

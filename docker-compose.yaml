@@ -3,19 +3,19 @@ services:
     extends:
       file: db-mongo/docker-compose.yaml
       service: mongo
-    networks:
-      - todolist-net
     volumes:
       - mongo-data:/data/db
+    networks:
+      - todolist-net
 
   elasticsearch:
     extends:
       file: ./elk-elasticsearch/docker-compose.yaml
-      service: elasticsearch
-    networks:
-      - todolist-net  
+      service: elasticsearch  
     volumes:
       - es-data:/usr/share/elasticsearch/data
+    networks:
+      - todolist-net
       
   kibana:
     extends:
@@ -23,24 +23,27 @@ services:
       service: kibana
     networks:
         - todolist-net
-
-#  todolist-backend:
-#    extends:
-#      file: ./backend/docker-compose.yaml
-#      service: todolist-backend
       
-  frontend:
+  todolist-frontend:
     extends:
       file: ./frontend/docker-compose.yaml
-      service: frontend
+      service: todolist-frontend
+    networks:
+      - todolist-net
+    
+  todolist-backend:
+    extends: 
+      file: ./backend/docker-compose.yaml
+      service: todolist-backend
     networks:
       - todolist-net
       
+volumes:
+  mongo-data:
+  es-data:
+    
 networks:
   todolist-net:
     name: todolist-net
     driver: bridge
     
-volumes:
-  mongo-data:
-  es-data:

@@ -8,6 +8,13 @@ services:
       - discovery.type=single-node
     volumes:
       - es-data:/usr/share/elasticsearch/data
-
+    networks:
+      - todolist-net
+    
 volumes:
   es-data:
+    
+networks:
+  todolist-net:
+    name: todolist-net
+    driver: bridge
