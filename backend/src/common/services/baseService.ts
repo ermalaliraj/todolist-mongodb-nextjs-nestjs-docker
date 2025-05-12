@@ -13,7 +13,7 @@ export class BaseService<T extends Document> {
     if (fields && fields.length > 0) {
       query = query.select(fields.join(' '))
     }
-    logger.debug("query: " +query)
+    // logger.debug("query: " +query)
     const obj = await query.exec()
     if (!obj) {
       throw new NotFoundException(`${this.model.modelName} not found`)
@@ -44,7 +44,7 @@ export class BaseService<T extends Document> {
   }
 
   async create(newObjects: Partial<T> | Partial<T>[]): Promise<T> {
-    logger.debug("Creating record for model xxx, json: " + JSON.stringify(newObjects))
+    // logger.debug("Creating record for model xxx, json: " + JSON.stringify(newObjects))
     return await this.model.create(newObjects)
   }
 
@@ -73,10 +73,6 @@ export class BaseService<T extends Document> {
     loggedInUserId: string | undefined,
     loggedInUserRole: string | undefined,
   ): Promise<T> {
-    console.log('Filter passing inside of updateAndAuthorize=', filter)
-    console.log('Data passing inside of updateAndAuthorize=', data)
-    console.log('loggedInUserId passing inside of updateAndAuthorize=', loggedInUserId)
-    console.log('loggedInUserRole passing inside of updateAndAuthorize=', loggedInUserRole)
     const obj = await this.getOneAndAuthorize(filter, undefined, loggedInUserId, loggedInUserRole)
     Object.assign(obj, data)
     return obj.save()

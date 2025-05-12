@@ -59,7 +59,7 @@ export class TodolistService extends BaseService<todolist> {
       totalRows: todoLists.length,
       rows: todoLists,
     };
-    logger.info(`Get All todoLists-returning : ${JSON.stringify(response)}`);
+    // logger.info(`Get All todoLists-returning : ${JSON.stringify(response)}`);
     return response;
   }
 
