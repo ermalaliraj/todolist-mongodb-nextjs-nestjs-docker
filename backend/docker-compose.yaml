@@ -11,10 +11,10 @@ services:
       - NODE_ENV=test
     #depends_on:
     #  - mongo
-    networks:
-      - todolist-net
-
-networks:
-  todolist-net:
-    name: todolist-net
-    driver: bridge
+#    networks:
+#      - todolist-net
+#
+#networks:
+#  todolist-net:
+#    name: todolist-net
+#    driver: bridge
