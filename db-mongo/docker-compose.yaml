@@ -15,6 +15,7 @@ services:
 
 volumes:
   mongo-data:
+    name: mongo-data
     
 networks:
   todolist-net:

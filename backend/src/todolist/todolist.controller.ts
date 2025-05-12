@@ -12,7 +12,7 @@ export class TodolistController {
 
   @Get('')
   async getAll(@Query() query: SearchTodolistDto): Promise<GetTodoListsResponse> {
-    return await this.todoListService.getAll(query);
+    return await this.todoListService.getAllTodoList(query);
   }
 
   @Get('/:todoListId([0-9a-fA-F]+)')

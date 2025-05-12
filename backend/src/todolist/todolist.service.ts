@@ -17,10 +17,12 @@ export class TodolistService extends BaseService<todolist> {
     super(todoListModel);
   }
 
-  async getAll(filter: SearchTodolistDto): Promise<GetTodoListsResponse> {
+  async getAllTodoList(filter: SearchTodolistDto): Promise<GetTodoListsResponse> {
     logger.info(`Get All todoLists with filters: ${JSON.stringify(filter)}`);
     const {_id, title, description, isCompleted, createdAt, updatedAt} = filter;
-    let startFrom = filter.pageSize * (filter.page - 1);
+    const page = parseInt(filter.page as any) || 1;
+    const pageSize = parseInt(filter.pageSize as any) || 10;
+    const startFrom = pageSize * (page - 1);
     let params: FilterParams = {};
     if (_id || title || description || isCompleted || createdAt || updatedAt) {
       params.$and = [];
@@ -46,14 +48,14 @@ export class TodolistService extends BaseService<todolist> {
     let todoLists = await this.getList(
       params,
       undefined,
-      filter.pageSize,
+      pageSize,
       startFrom,
-      filter.orderBy,
+      filter.orderBy ?? '-createdAt',
       false,
     );
     let response: GetTodoListsResponse = {
-      page: filter.page,
-      pageSize: filter.pageSize,
+      page: page,
+      pageSize: pageSize,
       totalRows: todoLists.length,
       rows: todoLists,
     };

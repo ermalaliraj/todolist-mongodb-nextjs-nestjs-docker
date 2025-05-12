@@ -13,6 +13,7 @@ services:
     
 volumes:
   es-data:
+    name: es-data
     
 networks:
   todolist-net:

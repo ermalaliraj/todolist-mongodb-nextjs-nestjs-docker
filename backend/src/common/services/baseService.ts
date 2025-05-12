@@ -120,17 +120,15 @@ export class BaseService<T extends Document> {
     //     query = query.select(fields.join(' '))
     // }
     //
-    // if (limit) {
-    //     query = query.limit(limit)
-    // }
-    //
-    // if (skip) {
-    //     query = query.skip(skip)
-    // }
-    //
-    // if (orderBy) {
-    //     query = query.sort(orderBy)
-    // }
+    if (limit) {
+      query = query.limit(limit)
+    }
+    if (skip) {
+      query = query.skip(skip)
+    }
+    if (orderBy) {
+        query = query.sort(orderBy)
+    }
     //
     // if (lean) {
     //     query = query.lean()
