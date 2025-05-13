@@ -20,7 +20,7 @@ export const todolistDetailsSlice = createSlice({
     openDialog: (state, action) => {
       state.isOpened = true
       state.editMode = action.payload.editMode
-      state.id = action.payload.todolist.id
+      state.id = action.payload.todolist._id
       state.title = action.payload.todolist.title
       state.description = action.payload.todolist.description
       state.isCompleted = action.payload.todolist.isCompleted
@@ -58,17 +58,6 @@ export const todolistDetailsSlice = createSlice({
   }
 })
 
-export const {
-  openDialog,
-  closeDialog,
-  setId,
-  setTitle,
-  setDescription,
-  setIsCompleted,
-  setCreatedAt,
-  setUpdatedAt,
-  validateForm,
-  resetForm
-} = todolistDetailsSlice.actions
+export const { openDialog, closeDialog, setId, setTitle, setDescription, setIsCompleted, setCreatedAt, setUpdatedAt, validateForm, resetForm } = todolistDetailsSlice.actions
 
-export default todolistDetailsSlice.reducer 
+export default todolistDetailsSlice.reducer
