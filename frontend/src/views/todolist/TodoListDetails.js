@@ -5,11 +5,11 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDialog, resetForm, setDescription, setIsCompleted, setTitle, validateForm } from 'src/store/todolist/todolistDetailsSlice'
+import { setTitle, setDescription, setIsCompleted, validateForm, resetForm, closeDialog } from 'src/store/todolist/todolistDetailsSlice'
 import { asyncAddTodoList } from 'src/store/todolist/todolistAddSlice'
 import { asyncUpdateTodoList } from 'src/store/todolist/todolistUpdateSlice'
 import { DETAILS_PAGE_WIDTH } from 'src/utils/consts'
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { FormControlLabel, Checkbox } from '@mui/material'
 
 function getTodoListFromState(state) {
   return {
@@ -40,7 +40,7 @@ const TodoListDetails = () => {
     if (updateRequested) {
       if (!state.titleError && !state.descriptionError) {
         const todolist = getTodoListFromState(state)
-        dispatch(asyncUpdateTodoList({id: state.id, data: todolist}))
+        dispatch(asyncUpdateTodoList({ id: state.id, data: todolist }))
         dispatch(closeDialog())
       }
       setUpdateRequested(false)
@@ -78,12 +78,12 @@ const TodoListDetails = () => {
         }
       }}
     >
-      <Box sx={{p: 3}}>
-        <Typography variant='h6' sx={{mb: 2}}>
+      <Box sx={{ p: 3 }}>
+        <Typography variant='h6' sx={{ mb: 2 }}>
           {!state.editMode ? `Todo Details: ${state.id}` : state.editMode && state.id !== '' ? `Todo Details: ${state.id}` : 'Todo Details'}
         </Typography>
 
-        <TextField fullWidth label='Title' value={state.title} onChange={e => dispatch(setTitle(e.target.value))} error={state.titleError} helperText={state.titleError ? 'Title is required' : ''} disabled={!state.editMode} sx={{mb: 3}}/>
+        <TextField fullWidth label='Title' value={state.title} onChange={e => dispatch(setTitle(e.target.value))} error={state.titleError} helperText={state.titleError ? 'Title is required' : ''} disabled={!state.editMode} sx={{ mb: 3 }} />
 
         <TextField
           fullWidth
@@ -95,12 +95,12 @@ const TodoListDetails = () => {
           disabled={!state.editMode}
           multiline
           rows={4}
-          sx={{mb: 3}}
+          sx={{ mb: 3 }}
         />
 
-        <FormControlLabel control={<Checkbox checked={state.isCompleted} onChange={e => dispatch(setIsCompleted(e.target.checked))} disabled={!state.editMode}/>} label='Completed' sx={{mb: 3}}/>
+        <FormControlLabel control={<Checkbox checked={state.isCompleted} onChange={e => dispatch(setIsCompleted(e.target.checked))} disabled={!state.editMode} />} label='Completed' sx={{ mb: 3 }} />
 
-        <Box sx={{display: 'flex', gap: 2}}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           {state.editMode ? (
             state.id === '' ? (
               <Button variant='contained' color='primary' onClick={onAdd}>

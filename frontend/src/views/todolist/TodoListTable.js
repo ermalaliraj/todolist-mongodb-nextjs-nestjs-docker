@@ -5,13 +5,11 @@ import IconButton from '@mui/material/IconButton'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Stack, Tooltip, Typography } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
-import { alpha } from '@mui/material/styles'
-import { COLORS } from 'src/utils/consts'
 import { useServerTable } from 'src/hooks/useServerTable'
 import CustomDataGrid from 'src/@core/components/custom-datagrid'
 import { openDialog } from 'src/store/todolist/todolistDetailsSlice'
+import { asyncGetTodo } from 'src/store/todolist/todolistDetailsSlice'
 import { asyncDeleteTodoList, resetDeleteStatus } from 'src/store/todolist/todolistDeleteSlice'
 import { asyncSearchTodoList, setQueryData } from 'src/store/todolist/todolistSearchSlice'
 
@@ -22,19 +20,20 @@ const TodoListTable = () => {
   const state = useSelector(rootState => rootState.todolist.search)
   const { loading, localData, totalRowCount } = useServerTable(page, pageSize, asyncSearchTodoList, state.queryData, setQueryData, setPage, setPageSize)
 
-  const onClickUpdate = todo => {
-    dispatch(openDialog({ editMode: true, todolist: todo }))
+  const openAndLoad = (id, editMode) => {
+    dispatch(openDialog({ editMode, id }))
+    dispatch(asyncGetTodo(id))
   }
+
+  const onClickUpdate = todo => openAndLoad(todo._id, true)
+
+  const onClickView = todo => openAndLoad(todo._id, false)
 
   const onClickDelete = id => {
     if (window.confirm('Are you sure you want to delete this todo item?')) {
       dispatch(asyncDeleteTodoList(id))
       dispatch(resetDeleteStatus())
     }
-  }
-
-  const onClickView = todo => {
-    dispatch(openDialog({ editMode: false, todolist: todo }))
   }
 
   const columns = [
@@ -115,6 +114,7 @@ const TodoListTable = () => {
   })
 
   const handlePageChange = newPage => setPage(newPage)
+
   const handlePageSizeChange = newSize => {
     const maxPage = Math.floor((totalRowCount - 1) / newSize)
     setPage(prev => Math.min(prev, maxPage))

@@ -20,6 +20,24 @@ export const searchTodoListApi = async query => {
   }
 }
 
+export const getTodoByIdApi = async id => {
+  const token = sessionStorage.getItem('token')
+  const url = `${API_URL}/todolist/${id}`
+  console.log(`calling GET ${url}`)
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    console.log('getTodoByIdApi response:', response.data)
+    return response.data
+  } catch (error) {
+    console.error('Failed calling backend url:', url, error)
+    throw error
+  }
+}
+
 export const addTodoListApi = async data => {
   const token = sessionStorage.getItem('token')
   const url = `${API_URL}/todolist`

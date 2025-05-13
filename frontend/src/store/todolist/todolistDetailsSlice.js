@@ -1,4 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getTodoByIdApi } from '../../api/TodoListApi'
+import { FAILED, IDLE, LOADING, SUCCEEDED } from '../storeStates'
+
+export const asyncGetTodo = createAsyncThunk('asyncGetTodo', async (id, { rejectWithValue }) => {
+  try {
+    return await getTodoByIdApi(id)
+  } catch (e) {
+    return rejectWithValue(e.message || e)
+  }
+})
 
 const initialValues = {
   id: '',
@@ -10,7 +20,9 @@ const initialValues = {
   titleError: false,
   descriptionError: false,
   isOpened: false,
-  editMode: false
+  editMode: false,
+  getStatus: IDLE,
+  getError: null
 }
 
 export const todolistDetailsSlice = createSlice({
@@ -20,16 +32,9 @@ export const todolistDetailsSlice = createSlice({
     openDialog: (state, action) => {
       state.isOpened = true
       state.editMode = action.payload.editMode
-      state.id = action.payload.todolist._id || ''
-      state.title = action.payload.todolist.title
-      state.description = action.payload.todolist.description
-      state.isCompleted = action.payload.todolist.isCompleted
-      state.createdAt = action.payload.todolist.createdAt
-      state.updatedAt = action.payload.todolist.updatedAt
+      state.id = action.payload.id || ''
     },
-    closeDialog: () => {
-      return { ...initialValues }
-    },
+    closeDialog: () => ({ ...initialValues }),
     setId: (state, action) => {
       state.id = action.payload
     },
@@ -52,9 +57,28 @@ export const todolistDetailsSlice = createSlice({
       state.titleError = !state.title
       state.descriptionError = !state.description
     },
-    resetForm: () => {
-      return { ...initialValues }
-    }
+    resetForm: () => ({ ...initialValues })
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(asyncGetTodo.pending, state => {
+        state.getStatus = LOADING
+        state.getError = null
+      })
+      .addCase(asyncGetTodo.fulfilled, (state, action) => {
+        const payload = action.payload || {}
+        state.getStatus = SUCCEEDED
+        state.id = payload._id || ''
+        state.title = payload.title || ''
+        state.description = payload.description || ''
+        state.isCompleted = payload.isCompleted || false
+        state.createdAt = payload.createdAt || ''
+        state.updatedAt = payload.updatedAt || ''
+      })
+      .addCase(asyncGetTodo.rejected, (state, action) => {
+        state.getStatus = FAILED
+        state.getError = action.payload
+      })
   }
 })
 
