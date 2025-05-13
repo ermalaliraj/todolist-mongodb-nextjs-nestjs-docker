@@ -1,4 +1,4 @@
-GET http://localhost:5041/todolist
+GET http://localhost:5041/todolist?page=0&pageSize=2
 
 ###
 POST http://localhost:5041/todolist

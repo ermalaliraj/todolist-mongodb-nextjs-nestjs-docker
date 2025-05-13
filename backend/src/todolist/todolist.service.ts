@@ -53,10 +53,12 @@ export class TodolistService extends BaseService<todolist> {
       filter.orderBy ?? '-createdAt',
       false,
     );
+
+    const todoListCount = await this.getListCount(params);
     let response: GetTodoListsResponse = {
       page: page,
       pageSize: pageSize,
-      totalRows: todoLists.length,
+      totalRows: todoListCount,
       rows: todoLists,
     };
     // logger.info(`Get All todoLists-returning : ${JSON.stringify(response)}`);
